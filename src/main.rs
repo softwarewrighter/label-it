@@ -69,7 +69,8 @@ struct LabelApp {
 
 impl eframe::App for LabelApp {
     fn update(&mut self, ctx: &egui::Context, _frame: &mut eframe::Frame) {
-        if self.undecorated && ctx.input(|i| i.pointer.primary_down()) {
+        // Start a window drag only once per click (not every frame while held)
+        if self.undecorated && ctx.input(|i| i.pointer.primary_pressed()) {
             ctx.send_viewport_cmd(egui::ViewportCommand::StartDrag);
         }
 
