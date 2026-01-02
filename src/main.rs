@@ -1,10 +1,10 @@
 use clap::Parser;
-use eframe::{NativeOptions, egui};
+use eframe::{egui, NativeOptions};
 use egui::{Color32, RichText};
 
 #[derive(Parser, Debug)]
 #[command(
-    name = "labelwin",
+    name = "label-it",
     about = "A tiny movable label window for screen recordings."
 )]
 struct Args {

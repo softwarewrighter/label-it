@@ -1,4 +1,4 @@
-# labelwin
+# label-it
 
 A tiny, movable label window for screen recordings. Built with Rust and [egui](https://github.com/emilk/egui).
 
@@ -24,7 +24,7 @@ cargo build --release
 ## Usage
 
 ```bash
-labelwin [OPTIONS]
+label-it [OPTIONS]
 ```
 
 ### Options
@@ -45,22 +45,22 @@ labelwin [OPTIONS]
 
 Default label:
 ```bash
-labelwin
+label-it
 ```
 
 Custom text with blue background:
 ```bash
-labelwin --text "Recording" --bg "#0066cc"
+label-it --text "Recording" --bg "#0066cc"
 ```
 
 Minimal overlay for screen recordings:
 ```bash
-labelwin --text "LIVE" --bg "#ff0000" --undecorated --always-on-top
+label-it --text "LIVE" --bg "#ff0000" --undecorated --always-on-top
 ```
 
 Custom dimensions:
 ```bash
-labelwin --text "Demo" --width 400 --height 100 --font-size 48
+label-it --text "Demo" --width 400 --height 100 --font-size 48
 ```
 
 ## License
