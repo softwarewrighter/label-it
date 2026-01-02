@@ -1,5 +1,5 @@
 use clap::Parser;
-use eframe::{egui, NativeOptions};
+use eframe::{NativeOptions, egui};
 use egui::{Color32, RichText};
 
 #[derive(Parser, Debug)]
@@ -65,10 +65,28 @@ struct LabelApp {
     fg: Color32,
     font_size: f32,
     undecorated: bool,
+    needs_resize: bool,
 }
 
 impl eframe::App for LabelApp {
     fn update(&mut self, ctx: &egui::Context, _frame: &mut eframe::Frame) {
+        // On first frame, measure text and resize window to fit
+        if self.needs_resize {
+            self.needs_resize = false;
+            let font_id = egui::FontId::proportional(self.font_size);
+            let text_width = ctx.fonts(|f| {
+                f.layout_no_wrap(self.text.clone(), font_id, Color32::WHITE)
+                    .rect
+                    .width()
+            });
+            let padding = 40.0; // horizontal padding
+            let new_width = text_width + padding;
+            let new_height = self.font_size + 50.0; // vertical padding
+            ctx.send_viewport_cmd(egui::ViewportCommand::InnerSize(egui::vec2(
+                new_width, new_height,
+            )));
+        }
+
         // Start a window drag only once per click (not every frame while held)
         if self.undecorated && ctx.input(|i| i.pointer.primary_pressed()) {
             ctx.send_viewport_cmd(egui::ViewportCommand::StartDrag);
@@ -111,6 +129,7 @@ fn main() -> eframe::Result<()> {
         fg,
         font_size: args.font_size,
         undecorated: args.undecorated,
+        needs_resize: true,
     };
 
     eframe::run_native(&args.title, options, Box::new(|_| Ok(Box::new(app))))
